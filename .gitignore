@@ -1,1 +1,11 @@
 .idea
+.idea/*
+*.pyc
+*.sqlite3
+node_modules
+package-lock.json
+static/dist/*
+jmsg/static/dist/
+*.rdb
+postgres-data
+.env
