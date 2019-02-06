@@ -15,7 +15,7 @@ module.exports = {
         }
     },
     entry: {
-        "home/index": './apps/home/index.js'
+        "home/index": './apps/home/index/index.js'
     },
     output: {
         path: path.resolve(__dirname, '../../static/dist'),
