@@ -7,8 +7,10 @@
     "react-dom": "^16.7.0"
   },
   "scripts": {
-    "build": "webpack --mode development --progress --debug --watch",
-    "build-prod": "webpack --mode production"
+    "build-dev": "webpack --mode development --progress --debug",
+    "build-watch": "webpack --mode development --progress --debug --watch",
+    "build-staging": "webpack --mode development --progress --debug --watch",
+    "build-prod": "webpack --mode production --progress --debug"
   },
   "eslintConfig": {
     "extends": "react-app"
