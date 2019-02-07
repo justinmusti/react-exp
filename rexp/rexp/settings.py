@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 CUSTOM_APPS = [
     'core',
     'home',
+    'user',
 ]
 INSTALLED_APPS += CUSTOM_APPS
 
