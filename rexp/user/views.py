@@ -9,6 +9,10 @@ def login(request):
     return render(request, 'login.html')
 
 
+def register(request):
+    return render(request, 'register.html')
+
+
 def logout(request):
     logout_user(request)
     return redirect('/')
@@ -60,3 +64,54 @@ def login_do(request):
         'data': data
     }
     return JsonResponse(data=return_data, status=status_code)
+
+
+def register_do(request):
+    status = False
+    status_code = 500
+    error = None
+    data = dict()
+
+    try:
+        post_data = json.loads(request.body)
+        username = post_data.get('username', None)
+        password = post_data.get('password', None)
+        # Validate fields
+        assert username and len(username) > 3, "Username must be at least 4 characters."
+        assert password and len(password) > 5, "Password must be at least 6 characters."
+        # Assert unique username
+        username = username.lower()
+        assert not User.objects.filter(username=username).exists(), "This username is taken."
+        # Move forward with new entry
+        user = User.objects.create(username=username)
+        user.set_password(password)
+        user.save()
+        # authenticate user
+        auth_user = authenticate(request, username=username, password=password)
+        assert auth_user, "Unable to authenticate your new account."
+        # Login user
+        login_user(request, auth_user)
+        status = True
+        error = None
+        status_code = 201
+        data = {}
+    except AssertionError as ae:
+        status = False
+        error = str(ae)
+        data = {}
+        status_code = 400
+
+    except Exception as e:
+        status = False
+        status_code = 500
+        error = 'Something went wrong.'
+        data = {}
+
+    response_data = {
+        'status': status,
+        'status_code': status_code,
+        'error': error,
+        'data': data
+    }
+    return JsonResponse(data=response_data, status=status_code)
+

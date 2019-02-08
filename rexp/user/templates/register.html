@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="register-user" is-user-logged-in="{{ request.user.is_authenticated|yesno:"1,0,0" }}"
+    user-register-url="{% url 'user:register_do'%}"
+></div>
+<script src="/static/dist/user/register.js"></script>
+{% endblock %}
+
+

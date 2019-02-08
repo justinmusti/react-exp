@@ -17,6 +17,7 @@ module.exports = {
     entry: {
         "home/index": './apps/home/index/index.js',
         "user/login": './apps/user/login.js',
+        "user/register": './apps/user/register.js',
     },
     output: {
         path: path.resolve(__dirname, '../../static/dist'),
