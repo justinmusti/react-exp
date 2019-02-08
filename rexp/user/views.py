@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
+from rest_framework.decorators import api_view
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'login.html', status=200)
 
 
 def register(request):
@@ -18,6 +19,7 @@ def logout(request):
     return redirect('/')
 
 
+@api_view(['POST'])
 def login_do(request):
     status = False
     status_code = 500
@@ -25,8 +27,7 @@ def login_do(request):
     data = []
 
     try:
-        # Convert and capture form data
-        post_data = json.loads(request.body)
+        post_data = request.data
         username = post_data.get('username', None)
         password = post_data.get('password', None)
         # Ensure required fields are not empty and expected length
@@ -56,7 +57,6 @@ def login_do(request):
         status_code = 500
         error = 'Something went wrong'
         data = {}
-
 
     return_data = {
         'status': status,
