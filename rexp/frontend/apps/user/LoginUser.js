@@ -39,6 +39,18 @@ export default class LoginUser extends React.Component{
 
 
     handleSubmit(event){
+        //validate username and password first
+        if (!this.state.data.username || this.state.data.username.length < 4){
+            this.setState({error: 'Username must be at least 4 characters'});
+            return;
+        }
+        if (!this.state.data.password || this.state.data.password.length < 6) {
+            this.setState({error: 'Password must be at least 6 characters'});
+            return;
+        }
+
+
+
         this.setState({isProcessing: true});
         fetch('/user/login-do/',
             {

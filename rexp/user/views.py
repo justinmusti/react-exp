@@ -19,9 +19,6 @@ def login_do(request):
     status_code = 500
     error = ''
     data = []
-    # TODO: remove this
-    import time
-    time.sleep(2)
 
     try:
         # Convert and capture form data
