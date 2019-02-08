@@ -1,11 +1,10 @@
 import React from 'react';
+import {getCookie} from '../utils';
 
 
 export default class RegisterUser extends React.Component{
     constructor(props){
         super(props);
-        console.log(props);
-
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,7 +53,7 @@ export default class RegisterUser extends React.Component{
             {
                 method: "POST",
                 headers: {
-                    'X-CSRFToken': this.getCookie('csrftoken'),
+                    'X-CSRFToken': getCookie('csrftoken'),
                 },
                 credentials: 'include',
                 body: JSON.stringify(this.state.data)
@@ -74,13 +73,6 @@ export default class RegisterUser extends React.Component{
             })
         })
 
-        console.log('Form Submitted');
-    }
-
-    getCookie(name) {
-        var value = "; " + document.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
     }
 
 

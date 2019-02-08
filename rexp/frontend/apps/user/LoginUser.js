@@ -1,10 +1,10 @@
 import React from 'react';
+import {getCookie} from '../utils';
 
 export default class LoginUser extends React.Component{
 
     constructor(props){
         super(props);
-        console.log('PROPS', props);
         let isLoggedin = false;
         if (props.hasOwnProperty('isLoggedin')){
             isLoggedin = props.isLoggedin;
@@ -24,7 +24,6 @@ export default class LoginUser extends React.Component{
         }
     }
 
-
     handleUsername(event){
         let data = this.state.data;
         data.username = event.target.value;
@@ -36,7 +35,6 @@ export default class LoginUser extends React.Component{
         data.password = event.target.value;
         this.setState({data: data})
     }
-
 
     handleSubmit(event){
         //validate username and password first
@@ -56,7 +54,7 @@ export default class LoginUser extends React.Component{
             {
                 method: "POST",
                 credentials: 'include',
-                headers: {'X-CSRFToken': this.getCookie('csrftoken')},
+                headers: {'X-CSRFToken': getCookie('csrftoken')},
                 body: JSON.stringify(this.state.data)
             })
             .then(response=>response.json())
@@ -71,16 +69,7 @@ export default class LoginUser extends React.Component{
         event.preventDefault();
     }
 
-    getCookie(name) {
-        var value = "; " + document.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
-    }
-
-
     render(){
-        console.log('Render', this.state);
-
         if(this.state.isLoggedin){
             return(
                 <div className="ui positive message">
