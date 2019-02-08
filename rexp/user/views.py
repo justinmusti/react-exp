@@ -1,12 +1,17 @@
-from django.contrib.auth import login as login_user, authenticate
+from django.contrib.auth import login as login_user, authenticate, logout as logout_user
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 
 
 def login(request):
     return render(request, 'login.html')
+
+
+def logout(request):
+    logout_user(request)
+    return redirect('/')
 
 
 def login_do(request):

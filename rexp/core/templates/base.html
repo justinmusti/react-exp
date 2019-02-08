@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 {% if request.user.is_authenticated %}
-                    <a class="ui item">
+                    <a class="ui item" href="{% url 'user:logout' %}">
                         Logout
                     </a>
                 {% else %}
