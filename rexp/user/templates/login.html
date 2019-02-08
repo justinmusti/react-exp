@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<div id="login-user"></div>
-
+<div id="login-user" is-user-logged-in="{{ request.user.is_authenticated|yesno:" 1,0,0" }}"></div>
 <script src="/static/dist/user/login.js"></script>
-
-
 {% endblock %}
 
 

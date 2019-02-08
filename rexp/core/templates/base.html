@@ -10,10 +10,45 @@
     <script src="/static/semantic-ui/semantic.js"></script>
 </head>
 <body>
-
 <div class="ui container">
-    {% block content %}
-    {% endblock %}
+    <header>
+        <div class="ui secondary  menu">
+            <a class="active item">
+                Home
+            </a>
+            <a class="item">
+                Messages
+            </a>
+            <a class="item">
+                Friends
+            </a>
+            <div class="right menu">
+                <div class="item">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search...">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+                {% if request.user.is_authenticated %}
+                    <a class="ui item">
+                        Logout
+                    </a>
+                {% else %}
+                    <a class="ui item" href="{% url 'user:login' %}">
+                        Login
+                    </a>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </header>
+
+    <div class="ui basic segment">
+        {% block content %}
+        {% endblock %}
+    </div>
+
 </div>
 <script src="/static/dist/commons.js"></script>
 </body>

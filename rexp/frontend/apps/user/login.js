@@ -2,5 +2,5 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LoginUser from './LoginUser';
 
-
-ReactDOM.render(<LoginUser isLoggedin={true} />, document.getElementById('login-user'));
+var element = document.getElementById('login-user');
+    ReactDOM.render(<LoginUser isLoggedin={parseInt(element.getAttribute('is-user-logged-in'))} />, element);
