@@ -54,6 +54,7 @@ export default class RegisterUser extends React.Component{
                 method: "POST",
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
                 },
                 credentials: 'include',
                 body: JSON.stringify(this.state.data)

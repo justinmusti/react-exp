@@ -66,6 +66,7 @@ def login_do(request):
     return JsonResponse(data=return_data, status=status_code)
 
 
+@api_view(['POST'])
 def register_do(request):
     status = False
     status_code = 500
@@ -73,7 +74,7 @@ def register_do(request):
     data = dict()
 
     try:
-        post_data = json.loads(request.body)
+        post_data = request.data
         username = post_data.get('username', None)
         password = post_data.get('password', None)
         # Validate fields
@@ -102,6 +103,8 @@ def register_do(request):
         status_code = 400
 
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         status = False
         status_code = 500
         error = 'Something went wrong.'
@@ -109,7 +112,6 @@ def register_do(request):
 
     response_data = {
         'status': status,
-        'status_code': status_code,
         'error': error,
         'data': data
     }

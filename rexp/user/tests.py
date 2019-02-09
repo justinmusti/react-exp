@@ -77,3 +77,28 @@ class UserViewTest(unittest.TestCase):
         self.assertEqual(response.status_code, 302)
         # test user is Anonymous after logout
         self.assertEqual(self.client.request().context['user'].is_authenticated, False)
+
+    def test_user_registration_landing_page(self):
+        registration_url = reverse('user:register')
+        response = self.client.get(registration_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_registration_process(self):
+        register_url = reverse('user:register_do')
+        # test response structure is json with expected keys
+        # test empty data provided | fail
+        response = self.client.post(register_url, {})
+        self.assertIn('status', json.loads(response.content))
+        self.assertEqual(str(response.status_code).startswith("2"), False)
+        # test providing missing data: no password | fail
+        response = self.client.post(register_url, {'username': get_random_string(5)})
+        self.assertEqual(str(response.status_code).startswith("4"), True)
+        # test providing missing data: no username | fail
+        response = self.client.post(register_url, {'password': get_random_string(10)})
+        self.assertEqual(str(response.status_code).startswith("4"), True)
+        # Test duplicate entry
+        response = self.client.post(register_url, {'username': self.username, 'password': get_random_string(16)})
+        self.assertEqual(str(response.status_code).startswith("4"), True)
+        # Test happy path | 201
+        response = self.client.post(register_url, {'username': get_random_string(6), 'password': get_random_string(10)})
+        self.assertEqual(201, response.status_code)
